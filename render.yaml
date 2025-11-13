@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: repiq-api
+    env: python
+    plan: free
+    buildCommand: pip install --no-cache-dir -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    autoDeploy: true
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: API_BEARER_TOKEN
+        value: supersecrettoken
+      - key: ALLOWED_ORIGINS
+        value: https://thecollective.lovable.app,http://localhost:3000
+      - key: EMBED_MODEL
+        value: text-embedding-3-large
+      - key: EMBED_DIM
+        value: "3072"
+databases:
+  - name: repiq-db
